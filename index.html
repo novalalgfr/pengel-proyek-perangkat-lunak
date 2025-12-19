@@ -29,9 +29,28 @@
         justify-content: center;
       }
 
-      /* Slide Pembukaan */
+      /* --- DEFINISI ANIMASI --- */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* --- SLIDE 1: PEMBUKAAN --- */
       .opening-slide {
         text-align: center;
+      }
+
+      /* Set awal opacity 0 agar tidak muncul sebelum animasi */
+      .opening-slide h1,
+      .opening-slide .subtitle,
+      .team-member {
+        opacity: 0;
       }
 
       .opening-slide h1 {
@@ -49,6 +68,14 @@
         font-size: 1.3rem;
         color: #666;
         margin-bottom: 60px;
+      }
+
+      /* Trigger Animasi Slide 1 saat slide aktif */
+      .slide.active .opening-slide h1 {
+        animation: fadeInUp 0.8s ease forwards;
+      }
+      .slide.active .opening-slide .subtitle {
+        animation: fadeInUp 0.8s ease 0.2s forwards;
       }
 
       .team-grid {
@@ -69,11 +96,15 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        /* Animasi default untuk member */
+        transform: translateY(20px);
       }
 
       .team-member:hover {
         border-color: #444;
-        transform: translateY(-5px);
+        transform: translateY(
+          -5px
+        ) !important; /* Override animasi saat hover */
         background: #161616;
       }
 
@@ -90,9 +121,41 @@
         font-family: monospace;
       }
 
-      /* Slide Gambaran Aplikasi */
+      /* Staggered Delay untuk Tim (Muncul satu per satu) */
+      .slide.active .team-member {
+        animation: fadeInUp 0.6s ease forwards;
+      }
+      .slide.active .team-member:nth-child(1) {
+        animation-delay: 0.3s;
+      }
+      .slide.active .team-member:nth-child(2) {
+        animation-delay: 0.4s;
+      }
+      .slide.active .team-member:nth-child(3) {
+        animation-delay: 0.5s;
+      }
+      .slide.active .team-member:nth-child(4) {
+        animation-delay: 0.6s;
+      }
+      .slide.active .team-member:nth-child(5) {
+        animation-delay: 0.7s;
+      }
+      .slide.active .team-member:nth-child(6) {
+        animation-delay: 0.8s;
+      }
+      .slide.active .team-member:nth-child(7) {
+        animation-delay: 0.9s;
+      }
+
+      /* --- SLIDE 2: GAMBARAN APLIKASI --- */
       .app-slide {
         text-align: center;
+      }
+
+      /* Set awal opacity 0 */
+      .app-slide h1,
+      .info-point {
+        opacity: 0;
       }
 
       .app-slide h1 {
@@ -104,6 +167,11 @@
         -webkit-text-fill-color: transparent;
         background-clip: text;
         letter-spacing: -2px;
+      }
+
+      /* Trigger Animasi Slide 2 */
+      .slide.active .app-slide h1 {
+        animation: fadeInUp 0.8s ease forwards;
       }
 
       .content-wrapper {
@@ -119,6 +187,20 @@
         border-left: 4px solid #333;
         padding-left: 25px;
         transition: all 0.3s ease;
+      }
+
+      /* Staggered delay untuk poin info */
+      .slide.active .info-point {
+        animation: fadeInUp 0.6s ease forwards;
+      }
+      .slide.active .info-point:nth-child(1) {
+        animation-delay: 0.3s;
+      }
+      .slide.active .info-point:nth-child(2) {
+        animation-delay: 0.5s;
+      }
+      .slide.active .info-point:nth-child(3) {
+        animation-delay: 0.7s;
       }
 
       .info-point:hover {
@@ -141,7 +223,7 @@
         line-height: 1.7;
       }
 
-      /* Timeline Slide */
+      /* --- TIMELINE SLIDE --- */
       .timeline-slide h1 {
         font-size: 3.5rem;
         font-weight: 700;
@@ -232,7 +314,7 @@
         margin-bottom: 12px;
       }
 
-      /* Detail Step Slides */
+      /* --- DETAIL SLIDES --- */
       .detail-slide {
         opacity: 0;
       }
@@ -333,8 +415,15 @@
         color: #666;
       }
 
+      /* --- SLIDE TERAKHIR: PENUTUP --- */
       .closing-slide {
         text-align: center;
+      }
+
+      /* Set awal opacity 0 */
+      .closing-slide h1,
+      .closing-slide p {
+        opacity: 0;
       }
 
       .closing-slide h1 {
@@ -347,7 +436,21 @@
         letter-spacing: -3px;
       }
 
-      /* Progress & Navigation */
+      /* Trigger Animasi Slide Akhir */
+      .slide.active .closing-slide h1 {
+        animation: fadeInUp 0.8s ease forwards;
+      }
+      .slide.active .closing-slide p {
+        animation: fadeInUp 0.8s ease 0.3s forwards;
+      }
+
+      .subtitle-footer {
+        font-size: 1.3rem;
+        color: #666;
+        margin-bottom: 60px;
+      }
+
+      /* --- NAVIGATION & GENERAL --- */
       .progress-bar {
         position: fixed;
         bottom: 40px;
@@ -686,10 +789,6 @@
               </div>
             </div>
           </div>
-
-          <!-- <p class="back-hint" style="margin-top: 30px">
-            Gunakan tombol panah untuk navigasi
-          </p> -->
         </div>
       </div>
     </div>
@@ -763,7 +862,7 @@
     <div class="slide">
       <div class="container closing-slide">
         <h1>Terima Kasih</h1>
-        <p>atas waktu dan perhatian Anda.</p>
+        <p class="subtitle-footer">atas waktu dan perhatian Anda.</p>
       </div>
     </div>
 
@@ -813,7 +912,7 @@
           slide.classList.toggle("active", i === currentSlide)
         );
 
-        // Update slide counter (hanya menghitung slide utama)
+        // Update slide counter
         const displaySlide =
           currentSlide >= 3 && currentSlide <= 7
             ? 3
@@ -831,21 +930,16 @@
       function nextSlide() {
         if (isTransitioning) return;
 
-        // Jika sedang di Timeline (Slide 2)
         if (currentSlide === 2) {
-          currentSlide = 3 + currentStep; // Buka detail step aktif
-        }
-        // Jika sedang di Detail (Slide 3-7)
-        else if (currentSlide >= 3 && currentSlide <= 7) {
+          currentSlide = 3 + currentStep;
+        } else if (currentSlide >= 3 && currentSlide <= 7) {
           if (currentStep < steps.length - 1) {
             currentStep++;
-            currentSlide = 2; // Kembali ke timeline tapi step sudah ganti
+            currentSlide = 2;
           } else {
-            currentSlide = 8; // Selesai semua step, ke closing
+            currentSlide = 8;
           }
-        }
-        // Slide lainnya
-        else if (currentSlide < slides.length - 1) {
+        } else if (currentSlide < slides.length - 1) {
           currentSlide = currentSlide === 2 ? 8 : currentSlide + 1;
         }
         updateSlide();
@@ -854,21 +948,16 @@
       function prevSlide() {
         if (isTransitioning) return;
 
-        // Jika sedang di Detail
         if (currentSlide >= 3 && currentSlide <= 7) {
-          currentSlide = 2; // Kembali ke timeline step yang sama
-        }
-        // Jika sedang di Timeline
-        else if (currentSlide === 2) {
+          currentSlide = 2;
+        } else if (currentSlide === 2) {
           if (currentStep > 0) {
             currentStep--;
-            currentSlide = 3 + currentStep; // Buka detail step sebelumnya
+            currentSlide = 3 + currentStep;
           } else {
-            currentSlide = 1; // Kembali ke "Tentang Website"
+            currentSlide = 1;
           }
-        }
-        // Slide lainnya
-        else if (currentSlide > 0) {
+        } else if (currentSlide > 0) {
           currentSlide = currentSlide === 8 ? 2 : currentSlide - 1;
         }
         updateSlide();
@@ -892,7 +981,6 @@
         updateSlide();
       }
 
-      // Input Listeners
       window.addEventListener("wheel", (e) => {
         if (isTransitioning) return;
         isTransitioning = true;
