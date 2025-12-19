@@ -90,7 +90,7 @@
         font-family: monospace;
       }
 
-      /* Slide Gambaran Aplikasi (List Layout) */
+      /* Slide Gambaran Aplikasi */
       .app-slide {
         text-align: center;
       }
@@ -211,18 +211,6 @@
         color: #fff;
       }
 
-      .step-desc {
-        font-size: 0.95rem;
-        color: #666;
-        line-height: 1.6;
-        display: none;
-      }
-
-      .step-card.active .step-desc {
-        display: block;
-        animation: fadeIn 0.4s ease;
-      }
-
       .progress-bar-timeline {
         width: 100%;
         height: 2px;
@@ -244,35 +232,120 @@
         margin-bottom: 12px;
       }
 
-      /* --- PERUBAHAN DI SINI UNTUK SLIDE PENUTUP --- */
-      .closing-slide {
+      /* Detail Step Slides */
+      .detail-slide {
+        opacity: 0;
+      }
+
+      .detail-slide.active {
+        opacity: 1;
+        animation: fadeIn 0.5s ease forwards;
+      }
+
+      .detail-content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .detail-header {
         text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .detail-step-number {
+        font-size: 0.85rem;
+        color: #666;
+        margin-bottom: 15px;
+        letter-spacing: 3px;
+        font-weight: 500;
+      }
+
+      .detail-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #fff 0%, #888 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -2px;
+      }
+
+      .detail-subtitle {
+        font-size: 1.2rem;
+        color: #666;
+        line-height: 1.6;
+      }
+
+      .detail-list {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh; /* Memastikan mengambil tinggi penuh container */
-        gap: 25px; /* Menggunakan gap untuk jarak antar teks */
+        gap: 25px;
+      }
+
+      .detail-item {
+        padding: 30px;
+        background: #111;
+        border: 1px solid #222;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: slideUp 0.5s ease forwards;
+      }
+
+      .detail-item:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .detail-item:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .detail-item:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .detail-item:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+
+      .detail-item:hover {
+        border-color: #444;
+        background: #161616;
+        transform: translateX(10px);
+      }
+
+      .detail-item-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 10px;
+      }
+
+      .detail-item-desc {
+        font-size: 1rem;
+        color: #888;
+        line-height: 1.7;
+      }
+
+      .back-hint {
+        text-align: center;
+        margin-top: 60px;
+        font-size: 0.9rem;
+        color: #666;
+      }
+
+      .closing-slide {
+        text-align: center;
       }
 
       .closing-slide h1 {
         font-size: 5rem;
         font-weight: 700;
-        margin: 0; /* Menghapus margin bawaan agar centering presisi */
         background: linear-gradient(135deg, #fff 0%, #888 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         letter-spacing: -3px;
-        line-height: 1.1;
       }
-
-      .closing-slide p {
-        font-size: 1.3rem;
-        color: #666;
-        margin: 0; /* Menghapus margin bawaan */
-      }
-      /* ------------------------------------------- */
 
       /* Progress & Navigation */
       .progress-bar {
@@ -290,7 +363,6 @@
         height: 8px;
         border-radius: 50%;
         background: #333;
-        cursor: pointer;
         transition: all 0.3s ease;
       }
 
@@ -314,13 +386,12 @@
 
       .slide.active {
         display: block;
-        animation: fadeIn 0.5s ease;
       }
 
       @keyframes fadeIn {
         from {
           opacity: 0;
-          transform: translateY(20px);
+          transform: translateY(10px);
         }
         to {
           opacity: 1;
@@ -328,38 +399,16 @@
         }
       }
 
-      @media (max-width: 768px) {
-        .container {
-          padding: 40px 20px;
-        }
-
-        .opening-slide h1,
-        .app-slide h1,
-        .timeline-slide h1 {
-          font-size: 2.5rem;
-        }
-
-        .closing-slide h1 {
-          font-size: 3rem;
-        }
-
-        .team-grid,
-        .timeline-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .content-wrapper {
-          gap: 25px;
-        }
-
-        .info-desc {
-          font-size: 1rem;
+      @keyframes slideUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
       }
     </style>
   </head>
   <body>
-    <div class="slide-number" id="slideNumber">1 / 4</div>
+    <div class="slide-number" id="slideNumber">1 / 5</div>
 
     <div class="slide active">
       <div class="container opening-slide">
@@ -401,7 +450,6 @@
     <div class="slide">
       <div class="container app-slide">
         <h1>Tentang Website</h1>
-
         <div class="content-wrapper">
           <div class="info-point">
             <div class="info-title">Latar Belakang</div>
@@ -409,49 +457,26 @@
               <p>
                 Pengembangan website ini didasari oleh kebutuhan untuk
                 memperluas jangkauan penjualan secara digital serta mengatasi
-                kendala pencatatan stok ganda antara transaksi online dan
-                offline agar lebih efisien dan akurat.
+                kendala pencatatan stok ganda.
               </p>
             </div>
           </div>
-
           <div class="info-point">
             <div class="info-title">Tujuan Pengembangan</div>
             <div class="info-desc">
               <p>
-                Bertujuan menyediakan platform e-commerce yang memudahkan
-                pelanggan berbelanja dari berbagai perangkat, sekaligus
-                berfungsi sebagai sistem manajemen gudang terpadu yang
-                menyinkronkan data stok secara otomatis.
+                Menyediakan platform e-commerce yang memudahkan pelanggan
+                sekaligus berfungsi sebagai sistem manajemen gudang terpadu.
               </p>
             </div>
           </div>
-
           <div class="info-point">
             <div class="info-title">Fitur Utama</div>
             <div class="info-desc">
-              <ul
-                style="
-                  list-style-type: disc;
-                  padding-left: 20px;
-                  margin-top: 10px;
-                "
-              >
-                <li style="margin-bottom: 8px">
-                  <strong>Belanja Daring Fleksibel:</strong> Akses katalog dan
-                  pembelian produk plastik serta bahan kue kapan saja tanpa
-                  batasan lokasi.
-                </li>
-                <li style="margin-bottom: 8px">
-                  <strong>Sinkronisasi Stok Otomatis:</strong> Pemotongan jumlah
-                  stok secara <em>real-time</em> yang terintegrasi untuk setiap
-                  transaksi <em>online</em> maupun <em>offline</em>.
-                </li>
-                <li>
-                  <strong>Desain Responsif Multi-Platform:</strong> Tampilan
-                  antarmuka yang otomatis menyesuaikan ukuran layar (komputer,
-                  tablet, <em>smartphone</em>).
-                </li>
+              <ul style="list-style-type: disc; padding-left: 20px">
+                <li>Belanja Daring Fleksibel</li>
+                <li>Sinkronisasi Stok Otomatis</li>
+                <li>Desain Responsif Multi-Platform</li>
               </ul>
             </div>
           </div>
@@ -463,15 +488,275 @@
       <div class="container timeline-slide">
         <h1>Proses Pengembangan</h1>
         <p class="subtitle">Alur kerja pengembangan dari awal hingga akhir</p>
-
         <div class="progress-bar-timeline">
           <div class="progress-fill-timeline" id="progressFillTimeline"></div>
         </div>
         <p class="progress-text-timeline" id="progressTextTimeline">
           Step 1 of 5
         </p>
-
         <div class="timeline-grid" id="timeline"></div>
+      </div>
+    </div>
+
+    <div class="slide detail-slide">
+      <div class="container">
+        <div class="detail-content">
+          <div class="detail-header">
+            <div class="detail-step-number">STEP 01</div>
+            <h1 class="detail-title">System Analyst</h1>
+            <p class="detail-subtitle">
+              Identifikasi kebutuhan sistem dan pemodelan arsitektur aplikasi
+            </p>
+          </div>
+          <div class="detail-list">
+            <div class="detail-item">
+              <div class="detail-item-title">Requirement Gathering</div>
+              <div class="detail-item-desc">
+                Wawancara mendalam dengan klien untuk menyusun Software
+                Requirements Specification (SRS).
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-title">UML Modeling</div>
+              <div class="detail-item-desc">
+                Visualisasi alur sistem melalui Use Case, Activity, dan Sequence
+                Diagram.
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-title">Data Structuring</div>
+              <div class="detail-item-desc">
+                Perancangan struktur data yang efisien menggunakan Entity
+                Relationship Diagram (ERD).
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide detail-slide">
+      <div class="container">
+        <div class="detail-content">
+          <div class="detail-header">
+            <div class="detail-step-number">STEP 02</div>
+            <h1 class="detail-title">UI/UX Design</h1>
+            <p class="detail-subtitle">
+              Transformasi konsep menjadi antarmuka visual yang intuitif
+            </p>
+          </div>
+          <div class="detail-list">
+            <div class="detail-item">
+              <div class="detail-item-title">Visual Identity</div>
+              <div class="detail-item-desc">
+                Penentuan palet warna, tipografi, dan elemen visual yang sesuai
+                dengan branding Sinar Plastik.
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-title">High-Fidelity Mockup</div>
+              <div class="detail-item-desc">
+                Pembuatan desain akhir yang presisi dan prototipe interaktif
+                untuk pengalaman pengguna.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide detail-slide">
+      <div class="container">
+        <div class="detail-content" style="max-width: 1200px">
+          <div class="detail-header" style="margin-bottom: 30px">
+            <div class="detail-step-number">STEP 03</div>
+            <h1 class="detail-title">Programming Phase</h1>
+            <p class="detail-subtitle">
+              Implementasi teknis pada sisi Client-Side dan Server-Side
+            </p>
+          </div>
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 30px;
+              align-items: start;
+            "
+          >
+            <div class="detail-list">
+              <h2
+                style="
+                  color: #fff;
+                  font-size: 1.4rem;
+                  margin-bottom: 15px;
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                "
+              >
+                <span style="color: #666; font-family: monospace"
+                  >&lt;/&gt;</span
+                >
+                Frontend
+              </h2>
+              <div
+                class="detail-item"
+                style="padding: 20px; margin-bottom: 15px"
+              >
+                <div class="detail-item-title" style="font-size: 1.1rem">
+                  Responsive Interface
+                </div>
+                <div class="detail-item-desc" style="font-size: 0.9rem">
+                  Membangun UI interaktif menggunakan Next.js dan Tailwind CSS
+                  yang adaptif di berbagai perangkat.
+                </div>
+              </div>
+              <div
+                class="detail-item"
+                style="padding: 20px; margin-bottom: 15px"
+              >
+                <div class="detail-item-title" style="font-size: 1.1rem">
+                  State & Logic
+                </div>
+                <div class="detail-item-desc" style="font-size: 0.9rem">
+                  Pengelolaan logika keranjang belanja, validasi form, dan
+                  sinkronisasi data lokal pengguna secara real-time.
+                </div>
+              </div>
+              <div class="detail-item" style="padding: 20px">
+                <div class="detail-item-title" style="font-size: 1.1rem">
+                  API Consumption
+                </div>
+                <div class="detail-item-desc" style="font-size: 0.9rem">
+                  Integrasi data dari server ke antarmuka melalui pemanggilan
+                  REST API.
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-list">
+              <h2
+                style="
+                  color: #fff;
+                  font-size: 1.4rem;
+                  margin-bottom: 15px;
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                "
+              >
+                <span style="color: #666; font-family: monospace">{ : }</span>
+                Backend
+              </h2>
+              <div
+                class="detail-item"
+                style="padding: 20px; margin-bottom: 15px"
+              >
+                <div class="detail-item-title" style="font-size: 1.1rem">
+                  Core Architecture
+                </div>
+                <div class="detail-item-desc" style="font-size: 0.9rem">
+                  Perancangan struktur database relasional dan pembuatan sistem
+                  RESTful API menggunakan framework Next.js.
+                </div>
+              </div>
+              <div
+                class="detail-item"
+                style="padding: 20px; margin-bottom: 15px"
+              >
+                <div class="detail-item-title" style="font-size: 1.1rem">
+                  Third-party Integration
+                </div>
+                <div class="detail-item-desc" style="font-size: 0.9rem">
+                  Implementasi Multi-API: <b>Midtrans</b> (pembayaran otomatis),
+                  <b>RajaOngkir</b> (kalkulasi ongkir), dan
+                  <b>BinderByte</b> (pelacakan resi/tracking paket) secara
+                  real-time.
+                </div>
+              </div>
+              <div class="detail-item" style="padding: 20px">
+                <div class="detail-item-title" style="font-size: 1.1rem">
+                  API Management
+                </div>
+                <div class="detail-item-desc" style="font-size: 0.9rem">
+                  Penyusunan dokumentasi endpoint API yang sistematis melalui
+                  Postman.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <p class="back-hint" style="margin-top: 30px">
+            Gunakan tombol panah untuk navigasi
+          </p> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="slide detail-slide">
+      <div class="container">
+        <div class="detail-content">
+          <div class="detail-header">
+            <div class="detail-step-number">STEP 04</div>
+            <h1 class="detail-title">Testing</h1>
+            <p class="detail-subtitle">
+              Penjaminan kualitas dan optimalisasi performa website
+            </p>
+          </div>
+          <div class="detail-list">
+            <div class="detail-item">
+              <div class="detail-item-title">Functional Testing</div>
+              <div class="detail-item-desc">
+                Metode Blackbox untuk memastikan setiap fitur berjalan sesuai
+                logika bisnis yang diharapkan.
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-title">Performance Audit</div>
+              <div class="detail-item-desc">
+                Analisis Lighthouse untuk mengoptimalkan kecepatan akses, SEO,
+                dan aksesibilitas website.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide detail-slide">
+      <div class="container">
+        <div class="detail-content" style="max-width: 1000px">
+          <div class="detail-header" style="margin-bottom: 40px">
+            <div class="detail-step-number">STEP 05</div>
+            <h1 class="detail-title">Documentation</h1>
+            <p class="detail-subtitle">
+              Penyusunan aset teknis dan panduan instruksional operasional
+              sistem
+            </p>
+          </div>
+          <div class="detail-list">
+            <div class="detail-item" style="padding: 25px; margin-bottom: 20px">
+              <div class="detail-item-title">Laporan Akhir & Manual Book</div>
+              <div class="detail-item-desc">
+                Dokumentasi komprehensif yang mencakup arsitektur kode, skema
+                database, konfigurasi server, serta aset teknis pemeliharaan
+                sistem.
+              </div>
+            </div>
+
+            <div class="detail-item" style="padding: 25px">
+              <div class="detail-item-title">
+                User Manual & Panduan Pengguna
+              </div>
+              <div class="detail-item-desc">
+                Instruksi visual dan panduan langkah demi langkah bagi admin
+                toko untuk mengelola katalog, memproses pesanan, hingga melacak
+                pengiriman.
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -486,26 +771,17 @@
 
     <script>
       const steps = [
-        {
-          title: "System Analyst",
-        },
-        {
-          title: "UI/UX Design",
-        },
-        {
-          title: "Programming",
-        },
-        {
-          title: "Testing",
-        },
-        {
-          title: "Documentation",
-        },
+        { title: "System Analyst" },
+        { title: "UI/UX Design" },
+        { title: "Programming" },
+        { title: "Testing" },
+        { title: "Documentation" },
       ];
 
       const slides = document.querySelectorAll(".slide");
       let currentSlide = 0;
       let currentStep = 0;
+      let isTransitioning = false;
 
       function renderTimeline() {
         document.getElementById("timeline").innerHTML = steps
@@ -519,7 +795,6 @@
                       "0"
                     )}</div>
                     <div class="step-title">${step.title}</div>
-                    
                 </div>
             `
           )
@@ -533,80 +808,105 @@
         } of ${steps.length}`;
       }
 
-      function goToStep(index) {
-        currentStep = index;
-        renderTimeline();
+      function updateSlide() {
+        slides.forEach((slide, i) =>
+          slide.classList.toggle("active", i === currentSlide)
+        );
+
+        // Update slide counter (hanya menghitung slide utama)
+        const displaySlide =
+          currentSlide >= 3 && currentSlide <= 7
+            ? 3
+            : currentSlide > 7
+            ? currentSlide - 4
+            : currentSlide;
+        document.getElementById("slideNumber").textContent = `${
+          displaySlide + 1
+        } / 5`;
+
+        renderDots();
+        if (currentSlide === 2) renderTimeline();
+      }
+
+      function nextSlide() {
+        if (isTransitioning) return;
+
+        // Jika sedang di Timeline (Slide 2)
+        if (currentSlide === 2) {
+          currentSlide = 3 + currentStep; // Buka detail step aktif
+        }
+        // Jika sedang di Detail (Slide 3-7)
+        else if (currentSlide >= 3 && currentSlide <= 7) {
+          if (currentStep < steps.length - 1) {
+            currentStep++;
+            currentSlide = 2; // Kembali ke timeline tapi step sudah ganti
+          } else {
+            currentSlide = 8; // Selesai semua step, ke closing
+          }
+        }
+        // Slide lainnya
+        else if (currentSlide < slides.length - 1) {
+          currentSlide = currentSlide === 2 ? 8 : currentSlide + 1;
+        }
+        updateSlide();
+      }
+
+      function prevSlide() {
+        if (isTransitioning) return;
+
+        // Jika sedang di Detail
+        if (currentSlide >= 3 && currentSlide <= 7) {
+          currentSlide = 2; // Kembali ke timeline step yang sama
+        }
+        // Jika sedang di Timeline
+        else if (currentSlide === 2) {
+          if (currentStep > 0) {
+            currentStep--;
+            currentSlide = 3 + currentStep; // Buka detail step sebelumnya
+          } else {
+            currentSlide = 1; // Kembali ke "Tentang Website"
+          }
+        }
+        // Slide lainnya
+        else if (currentSlide > 0) {
+          currentSlide = currentSlide === 8 ? 2 : currentSlide - 1;
+        }
+        updateSlide();
       }
 
       function renderDots() {
         const bar = document.getElementById("progressBar");
         bar.innerHTML = Array.from(slides)
-          .map(
-            (_, i) =>
-              `<div class="dot ${
-                i === currentSlide ? "active" : ""
-              }" onclick="goToSlide(${i})"></div>`
-          )
+          .map((_, i) => {
+            if (i >= 3 && i <= 7) return "";
+            return `<div class="dot ${
+              i === currentSlide ? "active" : ""
+            }"></div>`;
+          })
           .join("");
       }
 
-      function updateSlide() {
-        slides.forEach((slide, i) => {
-          slide.classList.toggle("active", i === currentSlide);
-        });
-        document.getElementById("slideNumber").textContent = `${
-          currentSlide + 1
-        } / ${slides.length}`;
-        renderDots();
-
-        if (currentSlide === 2) {
-          renderTimeline();
-        }
-      }
-
-      function goToSlide(index) {
-        currentSlide = index;
+      function goToStep(index) {
+        currentStep = index;
+        currentSlide = 3 + index;
         updateSlide();
       }
 
-      function nextSlide() {
-        if (currentSlide === 2 && currentStep < steps.length - 1) {
-          currentStep++;
-          renderTimeline();
-        } else if (currentSlide < slides.length - 1) {
-          currentSlide++;
-          currentStep = 0;
-          updateSlide();
-        }
-      }
-
-      function prevSlide() {
-        if (currentSlide === 2 && currentStep > 0) {
-          currentStep--;
-          renderTimeline();
-        } else if (currentSlide > 0) {
-          currentSlide--;
-          currentStep = 0;
-          updateSlide();
-        }
-      }
-
-      renderDots();
-      renderTimeline();
-
-      let scrollTimeout;
+      // Input Listeners
       window.addEventListener("wheel", (e) => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-          if (e.deltaY > 0) nextSlide();
-          else prevSlide();
-        }, 100);
+        if (isTransitioning) return;
+        isTransitioning = true;
+        if (e.deltaY > 0) nextSlide();
+        else prevSlide();
+        setTimeout(() => (isTransitioning = false), 400);
       });
 
       document.addEventListener("keydown", (e) => {
         if (e.key === "ArrowRight" || e.key === " ") nextSlide();
         if (e.key === "ArrowLeft") prevSlide();
       });
+
+      updateSlide();
     </script>
   </body>
 </html>
