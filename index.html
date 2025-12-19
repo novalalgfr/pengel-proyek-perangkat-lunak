@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pengolahan Proyek Perangkat Lunak</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI",
+          sans-serif;
+        background: #0a0a0a;
+        color: #fff;
+        overflow: hidden;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 60px 40px;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      /* Slide Pembukaan */
+      .opening-slide {
+        text-align: center;
+      }
+
+      .opening-slide h1 {
+        font-size: 4rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #fff 0%, #888 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -2px;
+      }
+
+      .opening-slide .subtitle {
+        font-size: 1.3rem;
+        color: #666;
+        margin-bottom: 60px;
+      }
+
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .team-member {
+        padding: 20px;
+        background: #111;
+        border: 1px solid #222;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .team-member:hover {
+        border-color: #444;
+        transform: translateY(-5px);
+        background: #161616;
+      }
+
+      .member-name {
+        font-size: 1rem;
+        color: #fff;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+
+      .member-npm {
+        font-size: 0.9rem;
+        color: #888;
+        font-family: monospace;
+      }
+
+      /* Slide Gambaran Aplikasi (List Layout) */
+      .app-slide {
+        text-align: center;
+      }
+
+      .app-slide h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 50px;
+        background: linear-gradient(135deg, #fff 0%, #888 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -2px;
+      }
+
+      .content-wrapper {
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
+
+      .info-point {
+        border-left: 4px solid #333;
+        padding-left: 25px;
+        transition: all 0.3s ease;
+      }
+
+      .info-point:hover {
+        border-left-color: #fff;
+      }
+
+      .info-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .info-desc {
+        font-size: 1.1rem;
+        color: #888;
+        line-height: 1.7;
+      }
+
+      /* Timeline Slide */
+      .timeline-slide h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #fff 0%, #888 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -2px;
+      }
+
+      .timeline-slide .subtitle {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 80px;
+      }
+
+      .timeline-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1px;
+        background: #1a1a1a;
+        border: 1px solid #1a1a1a;
+        margin-bottom: 60px;
+      }
+
+      .step-card {
+        background: #0a0a0a;
+        padding: 40px 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        border: 1px solid transparent;
+      }
+
+      .step-card:hover {
+        background: #111;
+        border-color: #333;
+      }
+
+      .step-card.active {
+        background: #0a0a0a;
+        border-color: #fff;
+      }
+
+      .step-number {
+        font-size: 0.75rem;
+        color: #666;
+        margin-bottom: 12px;
+        font-weight: 500;
+        letter-spacing: 2px;
+      }
+
+      .step-card.active .step-number {
+        color: #fff;
+      }
+
+      .step-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #ccc;
+        margin-bottom: 15px;
+        line-height: 1.3;
+      }
+
+      .step-card.active .step-title {
+        color: #fff;
+      }
+
+      .step-desc {
+        font-size: 0.95rem;
+        color: #666;
+        line-height: 1.6;
+        display: none;
+      }
+
+      .step-card.active .step-desc {
+        display: block;
+        animation: fadeIn 0.4s ease;
+      }
+
+      .progress-bar-timeline {
+        width: 100%;
+        height: 2px;
+        background: #1a1a1a;
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      .progress-fill-timeline {
+        height: 100%;
+        background: #fff;
+        transition: width 0.5s ease;
+      }
+
+      .progress-text-timeline {
+        font-size: 0.85rem;
+        color: #666;
+        text-align: right;
+        margin-bottom: 12px;
+      }
+
+      /* --- PERUBAHAN DI SINI UNTUK SLIDE PENUTUP --- */
+      .closing-slide {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Memastikan mengambil tinggi penuh container */
+        gap: 25px; /* Menggunakan gap untuk jarak antar teks */
+      }
+
+      .closing-slide h1 {
+        font-size: 5rem;
+        font-weight: 700;
+        margin: 0; /* Menghapus margin bawaan agar centering presisi */
+        background: linear-gradient(135deg, #fff 0%, #888 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -3px;
+        line-height: 1.1;
+      }
+
+      .closing-slide p {
+        font-size: 1.3rem;
+        color: #666;
+        margin: 0; /* Menghapus margin bawaan */
+      }
+      /* ------------------------------------------- */
+
+      /* Progress & Navigation */
+      .progress-bar {
+        position: fixed;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        z-index: 100;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #333;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .dot.active {
+        background: #fff;
+        width: 24px;
+        border-radius: 4px;
+      }
+
+      .slide-number {
+        position: fixed;
+        top: 40px;
+        right: 40px;
+        font-size: 0.85rem;
+        color: #666;
+      }
+
+      .slide {
+        display: none;
+      }
+
+      .slide.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 40px 20px;
+        }
+
+        .opening-slide h1,
+        .app-slide h1,
+        .timeline-slide h1 {
+          font-size: 2.5rem;
+        }
+
+        .closing-slide h1 {
+          font-size: 3rem;
+        }
+
+        .team-grid,
+        .timeline-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .content-wrapper {
+          gap: 25px;
+        }
+
+        .info-desc {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-number" id="slideNumber">1 / 4</div>
+
+    <div class="slide active">
+      <div class="container opening-slide">
+        <h1>Website Toko Sinar Plastik</h1>
+        <p class="subtitle">Pengolahan Proyek Perangkat Lunak</p>
+        <div class="team-grid">
+          <div class="team-member">
+            <div class="member-name">Ahmad Noval Algifari</div>
+            <div class="member-npm">50422128</div>
+          </div>
+          <div class="team-member">
+            <div class="member-name">Arjuna Hardy Alva Rizky</div>
+            <div class="member-npm">50422265</div>
+          </div>
+          <div class="team-member">
+            <div class="member-name">Mohammad Aulia Ainur Rohim</div>
+            <div class="member-npm">50422906</div>
+          </div>
+          <div class="team-member">
+            <div class="member-name">Muhammad Ferdy Oktavian</div>
+            <div class="member-npm">51422055</div>
+          </div>
+          <div class="team-member">
+            <div class="member-name">Muhammad Izzuddin Almansyur</div>
+            <div class="member-npm">51422084</div>
+          </div>
+          <div class="team-member">
+            <div class="member-name">Muhammad Rafi Hardianto</div>
+            <div class="member-npm">51422109</div>
+          </div>
+          <div class="team-member">
+            <div class="member-name">Rayakha Rheza Musyaffa Damanik</div>
+            <div class="member-npm">51422394</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="container app-slide">
+        <h1>Tentang Website</h1>
+
+        <div class="content-wrapper">
+          <div class="info-point">
+            <div class="info-title">Latar Belakang</div>
+            <div class="info-desc">
+              <p>
+                Pengembangan website ini didasari oleh kebutuhan untuk
+                memperluas jangkauan penjualan secara digital serta mengatasi
+                kendala pencatatan stok ganda antara transaksi online dan
+                offline agar lebih efisien dan akurat.
+              </p>
+            </div>
+          </div>
+
+          <div class="info-point">
+            <div class="info-title">Tujuan Pengembangan</div>
+            <div class="info-desc">
+              <p>
+                Bertujuan menyediakan platform e-commerce yang memudahkan
+                pelanggan berbelanja dari berbagai perangkat, sekaligus
+                berfungsi sebagai sistem manajemen gudang terpadu yang
+                menyinkronkan data stok secara otomatis.
+              </p>
+            </div>
+          </div>
+
+          <div class="info-point">
+            <div class="info-title">Fitur Utama</div>
+            <div class="info-desc">
+              <ul
+                style="
+                  list-style-type: disc;
+                  padding-left: 20px;
+                  margin-top: 10px;
+                "
+              >
+                <li style="margin-bottom: 8px">
+                  <strong>Belanja Daring Fleksibel:</strong> Akses katalog dan
+                  pembelian produk plastik serta bahan kue kapan saja tanpa
+                  batasan lokasi.
+                </li>
+                <li style="margin-bottom: 8px">
+                  <strong>Sinkronisasi Stok Otomatis:</strong> Pemotongan jumlah
+                  stok secara <em>real-time</em> yang terintegrasi untuk setiap
+                  transaksi <em>online</em> maupun <em>offline</em>.
+                </li>
+                <li>
+                  <strong>Desain Responsif Multi-Platform:</strong> Tampilan
+                  antarmuka yang otomatis menyesuaikan ukuran layar (komputer,
+                  tablet, <em>smartphone</em>).
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="container timeline-slide">
+        <h1>Proses Pengembangan</h1>
+        <p class="subtitle">Alur kerja pengembangan dari awal hingga akhir</p>
+
+        <div class="progress-bar-timeline">
+          <div class="progress-fill-timeline" id="progressFillTimeline"></div>
+        </div>
+        <p class="progress-text-timeline" id="progressTextTimeline">
+          Step 1 of 5
+        </p>
+
+        <div class="timeline-grid" id="timeline"></div>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="container closing-slide">
+        <h1>Terima Kasih</h1>
+        <p>atas waktu dan perhatian Anda.</p>
+      </div>
+    </div>
+
+    <div class="progress-bar" id="progressBar"></div>
+
+    <script>
+      const steps = [
+        {
+          title: "System Analyst",
+        },
+        {
+          title: "UI/UX Design",
+        },
+        {
+          title: "Programming",
+        },
+        {
+          title: "Testing",
+        },
+        {
+          title: "Documentation",
+        },
+      ];
+
+      const slides = document.querySelectorAll(".slide");
+      let currentSlide = 0;
+      let currentStep = 0;
+
+      function renderTimeline() {
+        document.getElementById("timeline").innerHTML = steps
+          .map(
+            (step, i) => `
+                <div class="step-card ${
+                  i === currentStep ? "active" : ""
+                }" onclick="goToStep(${i})">
+                    <div class="step-number">STEP ${String(i + 1).padStart(
+                      2,
+                      "0"
+                    )}</div>
+                    <div class="step-title">${step.title}</div>
+                    
+                </div>
+            `
+          )
+          .join("");
+
+        const progress = ((currentStep + 1) / steps.length) * 100;
+        document.getElementById("progressFillTimeline").style.width =
+          progress + "%";
+        document.getElementById("progressTextTimeline").textContent = `Step ${
+          currentStep + 1
+        } of ${steps.length}`;
+      }
+
+      function goToStep(index) {
+        currentStep = index;
+        renderTimeline();
+      }
+
+      function renderDots() {
+        const bar = document.getElementById("progressBar");
+        bar.innerHTML = Array.from(slides)
+          .map(
+            (_, i) =>
+              `<div class="dot ${
+                i === currentSlide ? "active" : ""
+              }" onclick="goToSlide(${i})"></div>`
+          )
+          .join("");
+      }
+
+      function updateSlide() {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle("active", i === currentSlide);
+        });
+        document.getElementById("slideNumber").textContent = `${
+          currentSlide + 1
+        } / ${slides.length}`;
+        renderDots();
+
+        if (currentSlide === 2) {
+          renderTimeline();
+        }
+      }
+
+      function goToSlide(index) {
+        currentSlide = index;
+        updateSlide();
+      }
+
+      function nextSlide() {
+        if (currentSlide === 2 && currentStep < steps.length - 1) {
+          currentStep++;
+          renderTimeline();
+        } else if (currentSlide < slides.length - 1) {
+          currentSlide++;
+          currentStep = 0;
+          updateSlide();
+        }
+      }
+
+      function prevSlide() {
+        if (currentSlide === 2 && currentStep > 0) {
+          currentStep--;
+          renderTimeline();
+        } else if (currentSlide > 0) {
+          currentSlide--;
+          currentStep = 0;
+          updateSlide();
+        }
+      }
+
+      renderDots();
+      renderTimeline();
+
+      let scrollTimeout;
+      window.addEventListener("wheel", (e) => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          if (e.deltaY > 0) nextSlide();
+          else prevSlide();
+        }, 100);
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === " ") nextSlide();
+        if (e.key === "ArrowLeft") prevSlide();
+      });
+    </script>
+  </body>
+</html>
